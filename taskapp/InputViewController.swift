@@ -58,6 +58,27 @@ class InputViewController: UIViewController {
         }else{
             content.body = task.contents
         }
+        content.sound = UNNotificationSound.default
+        
+        //ローカル通知が発動するtriggerを作成
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute],from: task.date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: String(task.id), content: content, trigger: trigger)
+        
+        let center = UNUserNotificationCenter.current()
+        center.add(request){(error) in
+            print(error ?? "ローカル通知登録　OK")//errorがnil なら登録成功表示。errorが存在すればerrorを表示
+        }
+        //未通知のローカル通知一覧をログ出力
+        center.getPendingNotificationRequests{(requests: [UNNotificationRequest]) in
+            for request in requests{
+                print("/----------")
+                print(request)
+                print("----------/")
+            }
+        }
     }
     
     @objc func dismissKeyboard(){
