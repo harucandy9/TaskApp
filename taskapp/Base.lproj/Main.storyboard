@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="udb-wa-1s5">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="Ra5-jd-G3k" detailTextLabel="SXz-08-Lyb" style="IBUITableViewCellStyleSubtitle" id="yLD-R1-pB0">
@@ -45,13 +45,20 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Aye-iy-OFn">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="udb-wa-1s5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9Nb-oG-f9x"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="udb-wa-1s5" secondAttribute="bottom" id="D7k-Qw-g3t"/>
+                            <constraint firstItem="Aye-iy-OFn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="JB4-i4-d3t"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="udb-wa-1s5" secondAttribute="trailing" id="NNl-vh-UkQ"/>
-                            <constraint firstItem="udb-wa-1s5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="j9f-EW-BNi"/>
+                            <constraint firstItem="Aye-iy-OFn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="lvk-Ih-E4Z"/>
+                            <constraint firstItem="udb-wa-1s5" firstAttribute="top" secondItem="Aye-iy-OFn" secondAttribute="bottom" id="pMl-7f-z13"/>
+                            <constraint firstItem="Aye-iy-OFn" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="vaf-mm-Rjr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -63,6 +70,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="Aye-iy-OFn" id="McF-p0-87e"/>
                         <outlet property="tableView" destination="udb-wa-1s5" id="hNx-UK-UG6"/>
                         <segue destination="1dP-4Q-2jy" kind="show" identifier="cellSegue" id="qOA-Cr-pGM"/>
                     </connections>
@@ -113,6 +121,17 @@
                                     <constraint firstAttribute="height" constant="120" id="Mza-zp-pwk"/>
                                 </constraints>
                             </datePicker>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HS3-9d-qTv">
+                                <rect key="frame" x="10" y="495" width="394" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="カテゴリー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tHC-Gg-itx">
+                                <rect key="frame" x="10" y="464" width="394" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -122,12 +141,18 @@
                             <constraint firstItem="LY1-z1-ggA" firstAttribute="trailing" secondItem="ezl-R9-12T" secondAttribute="trailing" constant="10" id="Efr-lX-Dld"/>
                             <constraint firstItem="ezl-R9-12T" firstAttribute="leading" secondItem="LY1-z1-ggA" secondAttribute="leading" constant="10" id="FEd-aa-Iid"/>
                             <constraint firstItem="W1c-Yo-s7y" firstAttribute="leading" secondItem="LY1-z1-ggA" secondAttribute="leading" constant="10" id="HTb-4S-VXE"/>
+                            <constraint firstItem="HS3-9d-qTv" firstAttribute="top" secondItem="tHC-Gg-itx" secondAttribute="bottom" constant="10" id="LGV-mQ-Xjk"/>
+                            <constraint firstItem="tHC-Gg-itx" firstAttribute="leading" secondItem="LY1-z1-ggA" secondAttribute="leading" constant="10" id="LIm-Tp-Gwl"/>
                             <constraint firstItem="W1c-Yo-s7y" firstAttribute="top" secondItem="LY1-z1-ggA" secondAttribute="top" constant="10" id="MlP-t2-pZY"/>
+                            <constraint firstItem="HS3-9d-qTv" firstAttribute="leading" secondItem="LY1-z1-ggA" secondAttribute="leading" constant="10" id="NpY-4u-Agn"/>
                             <constraint firstItem="LY1-z1-ggA" firstAttribute="trailing" secondItem="W1c-Yo-s7y" secondAttribute="trailing" constant="10" id="Tsr-Yf-WJK"/>
+                            <constraint firstItem="LY1-z1-ggA" firstAttribute="trailing" secondItem="HS3-9d-qTv" secondAttribute="trailing" constant="10" id="YEa-sA-hyK"/>
                             <constraint firstItem="L7F-yh-po3" firstAttribute="trailing" secondItem="LY1-z1-ggA" secondAttribute="trailing" id="aCo-bb-llu"/>
                             <constraint firstItem="LY1-z1-ggA" firstAttribute="trailing" secondItem="T7o-x6-6xo" secondAttribute="trailing" constant="10" id="cKx-7o-g5Z"/>
+                            <constraint firstItem="LY1-z1-ggA" firstAttribute="trailing" secondItem="tHC-Gg-itx" secondAttribute="trailing" constant="10" id="cse-OW-pVS"/>
                             <constraint firstItem="h8m-Cz-PyU" firstAttribute="top" secondItem="ezl-R9-12T" secondAttribute="bottom" constant="10" id="d4y-xs-qz0"/>
                             <constraint firstItem="ezl-R9-12T" firstAttribute="top" secondItem="W1c-Yo-s7y" secondAttribute="bottom" constant="10" id="ed5-hh-bgQ"/>
+                            <constraint firstItem="tHC-Gg-itx" firstAttribute="top" secondItem="L7F-yh-po3" secondAttribute="bottom" constant="10" id="ema-7v-Z7y"/>
                             <constraint firstItem="h8m-Cz-PyU" firstAttribute="leading" secondItem="LY1-z1-ggA" secondAttribute="leading" constant="10" id="kqa-Eb-cTf"/>
                             <constraint firstItem="T7o-x6-6xo" firstAttribute="leading" secondItem="LY1-z1-ggA" secondAttribute="leading" constant="10" id="oO9-cs-CFD"/>
                             <constraint firstItem="L7F-yh-po3" firstAttribute="top" secondItem="T7o-x6-6xo" secondAttribute="bottom" constant="10" id="u16-Qw-yZ7"/>
@@ -136,6 +161,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="qCu-bU-pbi"/>
                     <connections>
+                        <outlet property="categoryTextView" destination="HS3-9d-qTv" id="P0h-Xc-Eoa"/>
                         <outlet property="contentTextView" destination="T7o-x6-6xo" id="PtX-vu-9Nu"/>
                         <outlet property="datePicker" destination="L7F-yh-po3" id="Hhd-RO-JSI"/>
                         <outlet property="titleTextField" destination="ezl-R9-12T" id="cyN-LB-O7y"/>

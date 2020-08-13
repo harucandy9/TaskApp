@@ -10,9 +10,10 @@ import UIKit
 import RealmSwift
 import UserNotifications
 
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     let realm = try! Realm()
     
@@ -26,6 +27,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
+        searchBar.placeholder = "カテゴリー検索"
+        searchBar.showsCancelButton = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
@@ -50,11 +54,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.reloadData()
     }
     
-    
+    //セル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return taskArray.count
     }
-
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
@@ -83,26 +88,42 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, commit edittingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
         if edittingStyle == .delete {
             let task = self.taskArray[indexPath.row]
-                //ローカル通知キャンセル
-                let center = UNUserNotificationCenter.current()
-                center.removePendingNotificationRequests(withIdentifiers: [String(task.id)])
-                
-                //データベースから削除する
-                try! realm.write{
-                    self.realm.delete(task)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }
-                
-                //未通知のローカル通知一覧をログ出力
-                center.getPendingNotificationRequests{(requests: [UNNotificationRequest]) in
-                    for request in requests{
-                        print("/----------")
-                        print(request)
-                        print("----------/")
-                    }
-                }
+            //ローカル通知キャンセル
+            let center = UNUserNotificationCenter.current()
+            center.removePendingNotificationRequests(withIdentifiers: [String(task.id)])
+            
+            //データベースから削除する
+            try! realm.write{
+                self.realm.delete(task)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
+            
+            //未通知のローカル通知一覧をログ出力
+            center.getPendingNotificationRequests{(requests: [UNNotificationRequest]) in
+                for request in requests{
+                    print("/----------")
+                    print(request)
+                    print("----------/")
+                }
+            }
         }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+    {
+        let results = realm.objects(Task.self).filter("category CONTAINS  '\(searchBar.text)'")
+        
+        if results.count != 0 {
+        taskArray = results
+        }
+        tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // キャンセルされたら、検索は行わない。
+        searchBar.text = ""
+        self.view.endEditing(true)
+        tableView.reloadData()
+    }
 }
 
