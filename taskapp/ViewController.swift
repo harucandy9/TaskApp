@@ -111,11 +111,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
-        let results = realm.objects(Task.self).filter("category CONTAINS  '\(searchBar.text)'")
+        let result = try! Realm().objects(Task.self).filter("category == %@", searchBar.text)
         
-        if results.count != 0 {
-        taskArray = results
-        }
+        taskArray = result
+        
         tableView.reloadData()
     }
     
@@ -123,6 +122,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         // キャンセルされたら、検索は行わない。
         searchBar.text = ""
         self.view.endEditing(true)
+        taskArray = realm.objects(Task.self)
         tableView.reloadData()
     }
 }
